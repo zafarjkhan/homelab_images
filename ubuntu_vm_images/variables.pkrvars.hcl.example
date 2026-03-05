@@ -1,0 +1,38 @@
+# Proxmox Configuration
+# Copy this file to variables.pkrvars.hcl and customize for your environment
+
+# Proxmox API URL
+proxmox_url = "https://192.168.1.103:8006/api2/json"
+
+# Proxmox Username (format: user@realm)
+proxmox_username = "root@pam"
+
+# Proxmox Password
+# IMPORTANT: Keep this file secure and never commit to git
+proxmox_password = "VMware1!"
+
+# Proxmox Node Name
+proxmox_node = "pve01"
+
+# VM ID for template (ensure this ID is not already in use)
+vm_id = 900
+
+# Template Name (how it will appear in Proxmox)
+template_name = "ubuntu-noble-2404-packer-template"
+
+# Storage Pools
+iso_storage_pool = "local"    # Where ISOs are stored
+storage_pool     = "data"     # Where VM disk will be created
+
+# VM Hardware Configuration
+cores     = 2        # Number of CPU cores
+memory    = 2048     # Memory in MB
+disk_size = "20G"    # Disk size (use G for GB)
+
+# Network Configuration
+network_bridge = "vmbr0"
+
+# SSH Credentials (for provisioning only)
+# These match the credentials in http/user-data
+ssh_username = "ubuntu"
+ssh_password = "ubuntu"
