@@ -1,0 +1,51 @@
+#cloud-config
+autoinstall:
+  version: 1
+  
+  locale: en_US.UTF-8
+  keyboard:
+    layout: us
+  
+  identity:
+    hostname: ubuntu-template
+    username: ubuntu
+    password: '$6$azsi3dgBw0T0Ae0E$GZkOZhC7xwnU6CbU0jtECQ3YB.Y9.eLoKZXxS/bCFCKUGD3DQv9A1A0cOWYpRccN8EWCluVEnauT264us7U3u.'
+  
+  ssh:
+    install-server: yes
+    allow-pw: yes
+  
+  network:
+    network:
+      version: 2
+      ethernets:
+        ens18:
+          dhcp4: true
+  
+  storage:
+    layout:
+      name: lvm
+  
+  packages:
+    - qemu-guest-agent
+    - cloud-init
+    - openssh-server
+    - net-tools
+    - vim
+    - curl
+    - wget
+    - software-properties-common
+    - tmux
+    - htop
+  
+  late-commands:
+    - echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/ubuntu
+    - chmod 440 /target/etc/sudoers.d/ubuntu
+    - curtin in-target --target=/target -- systemctl enable qemu-guest-agent
+    - curtin in-target --target=/target -- systemctl enable ssh
+  
+  user-data:
+    disable_root: false
+    package_upgrade: true
+    
+  shutdown: reboot
